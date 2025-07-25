@@ -10,10 +10,6 @@ jobs:
 
   build:
 
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: windows-latest                       
 
     steps:
@@ -30,7 +26,7 @@ jobs:
       uses: Nuget/setup-nuget@v1.0.2
 
     - name: Restore Packages
-      run: nuget restore MySolution.sln
+      run: nuget restore TAF.sln
 
     - name: Build the Solution
       run: msbuild TAF.sln 
