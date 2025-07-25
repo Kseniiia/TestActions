@@ -1,0 +1,37 @@
+name: .NET Test Project
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest                       
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: Nuget/setup-nuget@v1.0.2
+
+    - name: Restore Packages
+      run: nuget restore MySolution.sln
+
+    - name: Build the Solution
+      run: msbuild TAF.sln 
+
